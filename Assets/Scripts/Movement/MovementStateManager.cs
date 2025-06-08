@@ -20,7 +20,6 @@ public class MovementStateManager
     public void Start()
     {
         currentState = idleState;
-
         currentState.EnterState(this);
     }
 
