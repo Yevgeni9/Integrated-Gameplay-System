@@ -4,20 +4,15 @@ public class RightState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
     {
-
+        Debug.Log("is going right");
     }
 
     public override void UpdateState(MovementStateManager movement)
     {
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            movement.SwitchState(movement.idleState);
-        }
-
         movement.moveable.GoRight();
     }
 
-    public override void OnCollisionEnter(MovementStateManager movement)
+    public override void ExitState(MovementStateManager movement)
     {
 
     }

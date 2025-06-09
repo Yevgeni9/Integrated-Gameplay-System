@@ -4,20 +4,15 @@ public class LeftState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
     {
-        Debug.Log("Left");
+        Debug.Log("is going left");
     }
 
     public override void UpdateState(MovementStateManager movement)
     {
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            movement.SwitchState(movement.idleState);
-        }
-
         movement.moveable.GoLeft();
     }
 
-    public override void OnCollisionEnter(MovementStateManager movement)
+    public override void ExitState(MovementStateManager movement)
     {
 
     }

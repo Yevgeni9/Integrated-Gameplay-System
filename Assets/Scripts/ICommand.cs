@@ -21,11 +21,39 @@ public class MoveRightCommand : ICommand
     }
 }
 
+public class CrouchCommand : ICommand
+{
+    public void Execute(MovementStateManager movement)
+    {
+        movement.SwitchState(movement.crouchState);
+    }
+}
+
+public class DashCommand : ICommand
+{
+    public void Execute(MovementStateManager movement)
+    {
+        movement.SwitchState(movement.dashState);
+    }
+}
+
 public class JumpCommand : ICommand
 {
     public void Execute(MovementStateManager movement)
     {
-        movement.SwitchState(movement.jumpState);
+        // Jump should only happen once
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            movement.SwitchState(movement.jumpState);
+        }
+    }
+}
+
+public class IdleCommand : ICommand
+{
+    public void Execute(MovementStateManager movement)
+    {
+        movement.SwitchState(movement.idleState);
     }
 }
 

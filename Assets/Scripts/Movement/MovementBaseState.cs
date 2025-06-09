@@ -8,5 +8,5 @@ public abstract class MovementBaseState
 
     public abstract void UpdateState(MovementStateManager movement);
 
-    public abstract void OnCollisionEnter(MovementStateManager movement);
+    public abstract void ExitState(MovementStateManager movement);
 }
