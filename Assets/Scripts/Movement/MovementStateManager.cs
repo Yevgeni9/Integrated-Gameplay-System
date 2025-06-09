@@ -11,6 +11,7 @@ public class MovementStateManager
     public readonly float moveSpeed;
     public readonly float jumpForce;
     public bool isGrounded;
+    public bool AllowInput { get; private set; } = true;
 
     public IdleState idleState = new IdleState();
     public LeftState leftState = new LeftState();
@@ -48,6 +49,11 @@ public class MovementStateManager
     public void SetGrounded(bool grounded)
     {
         isGrounded = grounded;
+    }
+
+    public void SetAllowInput(bool allowed)
+    {
+        AllowInput = allowed;
     }
 
     public Rigidbody2D GetRb() => player.rb;

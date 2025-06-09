@@ -23,6 +23,11 @@ public class InputManager
 
     public void ManageInput(MovementStateManager movement)
     {
+        if (!movement.AllowInput)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             keyCommandMap[KeyCode.LeftShift].Execute(movement);
