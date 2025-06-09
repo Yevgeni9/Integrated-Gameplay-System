@@ -295,6 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 1500
+  rb: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1548638655}
-  - component: {fileID: 1548638654}
+  - component: {fileID: 1548638656}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -531,18 +532,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1548638654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548638653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3993b5f4f7a2b44296e84ed515af644, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1548638655
 Transform:
   m_ObjectHideFlags: 0
@@ -558,6 +547,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1548638656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548638653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3993b5f4f7a2b44296e84ed515af644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2123353240
 GameObject:
   m_ObjectHideFlags: 0

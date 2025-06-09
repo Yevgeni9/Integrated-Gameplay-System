@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementStateManager : Player
+public class MovementStateManager
 {
+    public Player player;
     MovementBaseState currentState;
+
+    public readonly Transform transform;
+    public readonly float moveSpeed;
+    public readonly float jumpForce;
+    public bool isGrounded;
+
     public IdleState idleState = new IdleState();
     public LeftState leftState = new LeftState();
     public RightState rightState = new RightState();
@@ -12,11 +19,12 @@ public class MovementStateManager : Player
     public JumpState jumpState = new JumpState();
     public DashState dashState = new DashState();
 
-    public IMoveable moveable {  get; private set; }
-
-    public MovementStateManager(IMoveable moveable)
+    public MovementStateManager(Transform playerTransform, float moveSpeed, float jumpForce, Player player)
     {
-        this.moveable = moveable;
+        this.transform = playerTransform;
+        this.moveSpeed = moveSpeed;
+        this.player = player;
+        this.jumpForce = jumpForce;
     }
 
     public void Start()
@@ -36,4 +44,11 @@ public class MovementStateManager : Player
         currentState = state;
         state.EnterState(this);
     }
+
+    public void SetGrounded(bool grounded)
+    {
+        isGrounded = grounded;
+    }
+
+    public Rigidbody2D GetRb() => player.rb;
 }

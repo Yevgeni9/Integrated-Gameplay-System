@@ -5,7 +5,13 @@ public class JumpState : MovementBaseState
     public override void EnterState(MovementStateManager movement)
     {
         Debug.Log("is jumping");
-        movement.moveable.Jump();
+        if (!movement.isGrounded)
+        {
+            return;
+        }
+
+        movement.GetRb().AddForce(Vector2.up * movement.jumpForce);
+        movement.isGrounded = false;
     }
 
     public override void UpdateState(MovementStateManager movement)

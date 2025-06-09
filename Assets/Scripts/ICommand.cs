@@ -41,11 +41,7 @@ public class JumpCommand : ICommand
 {
     public void Execute(MovementStateManager movement)
     {
-        // Jump should only happen once
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            movement.SwitchState(movement.jumpState);
-        }
+        movement.SwitchState(movement.jumpState);
     }
 }
 
