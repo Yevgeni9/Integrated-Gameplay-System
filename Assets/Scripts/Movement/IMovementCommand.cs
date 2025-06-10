@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public interface ICommand
+public interface IMovementCommand
 {
     void Execute(MovementStateManager movement);
 }
 
-public class MoveLeftCommand : ICommand
+public class MoveLeftCommand : IMovementCommand
 {
     public void Execute(MovementStateManager movement)
     {
@@ -13,7 +13,7 @@ public class MoveLeftCommand : ICommand
     }
 }
 
-public class MoveRightCommand : ICommand
+public class MoveRightCommand : IMovementCommand
 {
     public void Execute(MovementStateManager movement)
     {
@@ -21,7 +21,7 @@ public class MoveRightCommand : ICommand
     }
 }
 
-public class CrouchCommand : ICommand
+public class CrouchCommand : IMovementCommand
 {
     public void Execute(MovementStateManager movement)
     {
@@ -29,7 +29,7 @@ public class CrouchCommand : ICommand
     }
 }
 
-public class DashCommand : ICommand
+public class DashCommand : IMovementCommand
 {
     public void Execute(MovementStateManager movement)
     {
@@ -37,7 +37,7 @@ public class DashCommand : ICommand
     }
 }
 
-public class JumpCommand : ICommand
+public class JumpCommand : IMovementCommand
 {
     public void Execute(MovementStateManager movement)
     {
@@ -45,11 +45,10 @@ public class JumpCommand : ICommand
     }
 }
 
-public class IdleCommand : ICommand
+public class IdleCommand : IMovementCommand
 {
     public void Execute(MovementStateManager movement)
     {
         movement.SwitchState(movement.idleState);
     }
 }
-

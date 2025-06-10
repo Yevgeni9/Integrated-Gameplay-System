@@ -1,18 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
-public class AttackStateManager : MonoBehaviour
+public class AttackStateManager
 {
-    // Start is called before the first frame update
-    void Start()
+    private AttackBaseState currentState;
+
+    public PunchState punchState = new PunchState();
+    public KickState kickState = new KickState();
+    public SlashState slashState = new SlashState();
+
+    public bool AllowInput { get; private set; } = true;
+
+    public void Start()
     {
-        
+        currentState = punchState;
+        currentState.EnterState(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+        currentState.UpdateState(this);
+    }
+
+    public void SwitchState(AttackBaseState state)
+    {
+        currentState.ExitState(this);
+        currentState = state;
+        state.EnterState(this);
     }
 }

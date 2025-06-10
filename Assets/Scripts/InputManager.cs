@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class InputManager
 {
-    private Dictionary<KeyCode, ICommand> keyCommandMap;
-    private ICommand noInput;
+    private Dictionary<KeyCode, IMovementCommand> movementCommandMap;
+    private Dictionary<KeyCode, IAttackCommand> attackCommandMap;
+    private IMovementCommand noInput;
 
     public InputManager()
     {
-        keyCommandMap = new Dictionary<KeyCode, ICommand>
+        movementCommandMap = new Dictionary<KeyCode, IMovementCommand>
         {
             { KeyCode.A, new MoveLeftCommand() },
             { KeyCode.D, new MoveRightCommand() },
@@ -18,11 +19,19 @@ public class InputManager
             { KeyCode.LeftShift, new DashCommand() }
         };
 
+        attackCommandMap = new Dictionary<KeyCode, IAttackCommand>
+        {
+            { KeyCode.J, new PunchCommand() },
+            { KeyCode.K, new KickCommand() },
+            { KeyCode.I, new SlashCommand() }
+        };
+
         noInput = new IdleCommand();
     }
 
-    public void ManageInput(MovementStateManager movement)
+    public void ManageInput(MovementStateManager movement, AttackStateManager attack)
     {
+        // Movement inputs, some movement actions have a higher priority like dash and jump
         if (!movement.AllowInput)
         {
             return;
@@ -30,32 +39,42 @@ public class InputManager
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            keyCommandMap[KeyCode.LeftShift].Execute(movement);
+            movementCommandMap[KeyCode.LeftShift].Execute(movement);
             return;
         }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            keyCommandMap[KeyCode.W].Execute(movement);
+            movementCommandMap[KeyCode.W].Execute(movement);
             return;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            keyCommandMap[KeyCode.S].Execute(movement);
+            movementCommandMap[KeyCode.S].Execute(movement);
             return;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            keyCommandMap[KeyCode.A].Execute(movement);
+            movementCommandMap[KeyCode.A].Execute(movement);
             return;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            keyCommandMap[KeyCode.D].Execute(movement);
+            movementCommandMap[KeyCode.D].Execute(movement);
             return;
+        }
+
+        // Attack inputs, does not have priority so it can be done in a loop
+        foreach (var pair in attackCommandMap)
+        {
+            if (Input.GetKeyDown(pair.Key))
+            {
+                pair.Value.Execute(attack);
+                return;
+            }
         }
 
         noInput.Execute(movement);

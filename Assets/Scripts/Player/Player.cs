@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : Main
@@ -10,6 +7,7 @@ public class Player : Main
     public bool isGrounded { get; private set; } = true;
 
     private MovementStateManager movementStateManager;
+    private AttackStateManager attackStateManager;
     private InputManager inputManager;
 
     public Rigidbody2D rb;
@@ -23,13 +21,16 @@ public class Player : Main
     {
         movementStateManager = new MovementStateManager(transform, moveSpeed, jumpForce, this);
         movementStateManager.Start();
+        attackStateManager = new AttackStateManager();
+        attackStateManager.Start();
         inputManager = new InputManager();
     }
 
     private void Update()
     {
         movementStateManager.Update();
-        inputManager.ManageInput(movementStateManager);
+        attackStateManager.Update();
+        inputManager.ManageInput(movementStateManager, attackStateManager);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
