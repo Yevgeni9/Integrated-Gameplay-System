@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class Player : Main
 {
+    // Movement variables
     [SerializeField] public float moveSpeed;
     [SerializeField] public float jumpForce;
     public bool isGrounded { get; private set; } = true;
+
+    // Attack variables
+    public GameObject punchHitbox;
+    public GameObject kickHitbox;
 
     private MovementStateManager movementStateManager;
     private AttackStateManager attackStateManager;
     private InputManager inputManager;
 
-    public Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
 
     private void Awake()
     {
@@ -21,7 +26,7 @@ public class Player : Main
     {
         movementStateManager = new MovementStateManager(transform, moveSpeed, jumpForce, this);
         movementStateManager.Start();
-        attackStateManager = new AttackStateManager();
+        attackStateManager = new AttackStateManager(this);
         attackStateManager.Start();
         inputManager = new InputManager();
     }
@@ -30,7 +35,8 @@ public class Player : Main
     {
         movementStateManager.Update();
         attackStateManager.Update();
-        inputManager.ManageInput(movementStateManager, attackStateManager);
+        inputManager.ManageMovementInputs(movementStateManager);
+        inputManager.ManageAttackInputs(attackStateManager);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

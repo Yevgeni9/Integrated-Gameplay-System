@@ -29,7 +29,7 @@ public class InputManager
         noInput = new IdleCommand();
     }
 
-    public void ManageInput(MovementStateManager movement, AttackStateManager attack)
+    public void ManageMovementInputs(MovementStateManager movement)
     {
         // Movement inputs, some movement actions have a higher priority like dash and jump
         if (!movement.AllowInput)
@@ -67,6 +67,16 @@ public class InputManager
             return;
         }
 
+        noInput.Execute(movement);
+    }
+
+    public void ManageAttackInputs(AttackStateManager attack)
+    {
+        if (attack.isAttacking)
+        {
+            return;
+        }
+
         // Attack inputs, does not have priority so it can be done in a loop
         foreach (var pair in attackCommandMap)
         {
@@ -76,7 +86,5 @@ public class InputManager
                 return;
             }
         }
-
-        noInput.Execute(movement);
     }
 }
