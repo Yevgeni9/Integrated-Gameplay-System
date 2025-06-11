@@ -1,37 +1,29 @@
 using UnityEngine;
 
-public class Player : Main
+public class Player
 {
-    // Movement variables
-    [SerializeField] public float moveSpeed;
-    [SerializeField] public float jumpForce;
-    public bool isGrounded { get; private set; } = true;
-
-    // Attack variables
-    public GameObject punchHitbox;
-    public GameObject kickHitbox;
-
-    private MovementStateManager movementStateManager;
+    public Rigidbody2D rb;
+    public MovementStateManager movementStateManager;
     private AttackStateManager attackStateManager;
     private InputManager inputManager;
 
-    [HideInInspector] public Rigidbody2D rb;
+    public Transform transform;
+    public GameObject punchHitbox;
+    public GameObject kickHitbox;
 
-    private void Awake()
+    public Player(InputConfig inputConfig, Rigidbody2D rb, Transform transform, GameObject punch, GameObject kick, MonoBehaviour coroutineStarter)
     {
-        rb = GetComponent<Rigidbody2D>();
+        this.rb = rb;
+        this.transform = transform;
+        this.punchHitbox = punch;
+        this.kickHitbox = kick;
+
+        movementStateManager = new MovementStateManager(transform, 5f, 1500f, this);
+        attackStateManager = new AttackStateManager(this, coroutineStarter);
+        inputManager = new InputManager(inputConfig);
     }
 
-    private void Start()
-    {
-        movementStateManager = new MovementStateManager(transform, moveSpeed, jumpForce, this);
-        movementStateManager.Start();
-        attackStateManager = new AttackStateManager(this);
-        attackStateManager.Start();
-        inputManager = new InputManager();
-    }
-
-    private void Update()
+    public void Update()
     {
         movementStateManager.Update();
         attackStateManager.Update();
@@ -39,19 +31,8 @@ public class Player : Main
         inputManager.ManageAttackInputs(attackStateManager);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void SetGrounded(bool grounded)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            movementStateManager.SetGrounded(true);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            movementStateManager.SetGrounded(false);
-        }
+        movementStateManager.SetGrounded(grounded);
     }
 }

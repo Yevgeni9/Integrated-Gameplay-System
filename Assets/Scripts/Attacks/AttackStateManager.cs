@@ -6,6 +6,7 @@ using UnityEngine;
 public class AttackStateManager
 {
     public Player player;
+    private MonoBehaviour coroutineStarter;
     private AttackBaseState currentState;
     public bool isAttacking;
 
@@ -16,9 +17,11 @@ public class AttackStateManager
 
     public bool AllowInput { get; private set; } = true;
 
-    public AttackStateManager(Player player)
+    public AttackStateManager(Player player, MonoBehaviour coroutineStarter)
     {
+        Start();
         this.player = player;
+        this.coroutineStarter = coroutineStarter;
     }
 
     public void Start()
@@ -47,5 +50,10 @@ public class AttackStateManager
     public void EndAttack()
     {
         isAttacking = false;
+    }
+
+    public void StartCoroutine(IEnumerator routine)
+    {
+        coroutineStarter.StartCoroutine(routine);
     }
 }

@@ -16,9 +16,7 @@ public class PunchState : AttackBaseState
     public override void EnterState(AttackStateManager attack)
     {
         Debug.Log("Entered Punch");
-        attack.StartAttack();
-        attack.player.punchHitbox.SetActive(true);
-        attack.player.StartCoroutine(StartAttack(attack, 1f));
+        attack.StartCoroutine(StartAttack(attack, 0.3f));
     }
 
     public override void UpdateState(AttackStateManager attack)
@@ -33,9 +31,11 @@ public class PunchState : AttackBaseState
 
     private IEnumerator StartAttack(AttackStateManager attack, float delay)
     {
+        attack.StartAttack();
+        attack.player.punchHitbox.SetActive(true);
         yield return new WaitForSeconds(delay);
-        attack.player.punchHitbox.SetActive(false);
         attack.EndAttack();
+        attack.player.punchHitbox.SetActive(false);
         attack.SwitchState(attack.noAttackState);
     }
 }
@@ -45,9 +45,7 @@ public class KickState : AttackBaseState
     public override void EnterState(AttackStateManager attack)
     {
         Debug.Log("Entered Kick");
-        attack.StartAttack();
-        attack.player.kickHitbox.SetActive(true);
-        attack.player.StartCoroutine(StartAttack(attack, 1f));
+        attack.StartCoroutine(StartAttack(attack, 0.4f));
     }
 
     public override void UpdateState(AttackStateManager attack)
@@ -62,9 +60,11 @@ public class KickState : AttackBaseState
 
     private IEnumerator StartAttack(AttackStateManager attack, float delay)
     {
+        attack.StartAttack();
+        attack.player.kickHitbox.SetActive(true);
         yield return new WaitForSeconds(delay);
-        attack.player.kickHitbox.SetActive(false);
         attack.EndAttack();
+        attack.player.kickHitbox.SetActive(false);
         attack.SwitchState(attack.noAttackState);
     }
 }

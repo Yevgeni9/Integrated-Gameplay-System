@@ -22,6 +22,7 @@ public class MovementStateManager
 
     public MovementStateManager(Transform playerTransform, float moveSpeed, float jumpForce, Player player)
     {
+        Start();
         this.transform = playerTransform;
         this.moveSpeed = moveSpeed;
         this.player = player;
@@ -37,6 +38,7 @@ public class MovementStateManager
     public void Update()
     {
         currentState.UpdateState(this);
+        Debug.Log(isGrounded);
     }
 
     public void SwitchState(MovementBaseState state)
