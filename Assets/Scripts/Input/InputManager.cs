@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager
 {
-    private InputConfig config;
+    public InputConfig config; // Dash State needs it
     private Dictionary<KeyCode, IMovementCommand> movementCommandMap;
     private Dictionary<KeyCode, IAttackCommand> attackCommandMap;
     private IMovementCommand noInput;

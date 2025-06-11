@@ -5,7 +5,7 @@ public class Player
     public Rigidbody2D rb;
     public MovementStateManager movementStateManager;
     private AttackStateManager attackStateManager;
-    private InputManager inputManager;
+    public InputManager inputManager; // Public because DashState Needs it
 
     public Transform transform;
     public GameObject punchHitbox;
