@@ -7,7 +7,7 @@ public class AttackStateManager
 {
     public Player player;
     private MonoBehaviour coroutineStarter;
-    private AttackBaseState currentState;
+    public AttackBaseState currentState;
     public bool isAttacking;
 
     public PunchState punchState = new PunchState();
