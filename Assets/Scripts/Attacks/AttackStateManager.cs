@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
@@ -14,6 +15,9 @@ public class AttackStateManager
     public KickState kickState = new KickState();
     public SlashState slashState = new SlashState();
     public NoAttackState noAttackState = new NoAttackState();
+
+    public event Action OnAttackStart;
+    public event Action OnAttackEnd;
 
     public bool AllowInput { get; private set; } = true;
 
@@ -45,11 +49,20 @@ public class AttackStateManager
     public void StartAttack()
     {
         isAttacking = true;
+        OnAttackStart?.Invoke();
+        AllowInput = false;
     }
 
     public void EndAttack()
     {
         isAttacking = false;
+        OnAttackEnd?.Invoke();
+        AllowInput = true;
+    }
+
+    public void SetAllowInput(bool allowed)
+    {
+        AllowInput = allowed;
     }
 
     public void StartCoroutine(IEnumerator routine)

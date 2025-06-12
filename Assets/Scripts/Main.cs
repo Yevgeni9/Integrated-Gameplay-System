@@ -27,29 +27,32 @@ public class Main : MonoBehaviour
     private HealthBar player2HealthBar;
 
     [Header("Healthbar")]
-    public GameObject healthbarBlock;
+    public GameObject p1healthbarBlock;
+    public GameObject p2healthbarBlock;
     public Transform player1HealthContainer;
     public Transform player2HealthContainer;
 
     [Header("Settings")]
-    public int maxHealth = 10;
+    [SerializeField] private GameSettingsConfig gameConfig;
     public LayerMask groundLayer;
 
     private Player player1;
     private Player player2;
     
-
     void Start()
     {
+        // Settings
+        gameConfig = new GameSettingsConfig();
+
         // Health
-        player1HealthBar = new HealthBar(player1HealthContainer, healthbarBlock, maxHealth);
-        player2HealthBar = new HealthBar(player2HealthContainer, healthbarBlock, maxHealth);
-        player1Health = new HealthSystem(maxHealth, player1HealthBar);
-        player2Health = new HealthSystem(maxHealth, player2HealthBar);
+        player1HealthBar = new HealthBar(player1HealthContainer, p1healthbarBlock, gameConfig.maxHealth);
+        player2HealthBar = new HealthBar(player2HealthContainer, p2healthbarBlock, gameConfig.maxHealth);
+        player1Health = new HealthSystem(gameConfig.maxHealth, player1HealthBar);
+        player2Health = new HealthSystem(gameConfig.maxHealth, player2HealthBar);
 
         // Create players
-        player1 = new Player(player1InputConfig, player1Rb, player1Transform, player1PunchHitbox, player1KickHitbox, player1SlashHitbox, player1Health, this);
-        player2 = new Player(player2InputConfig, player2Rb, player2Transform, player2PunchHitbox, player2KickHitbox, player2SlashHitbox, player2Health, this);
+        player1 = new Player(player1InputConfig, player1Rb, player1Transform, player1PunchHitbox, player1KickHitbox, player1SlashHitbox, player1Health, gameConfig, this);
+        player2 = new Player(player2InputConfig, player2Rb, player2Transform, player2PunchHitbox, player2KickHitbox, player2SlashHitbox, player2Health, gameConfig, this);
 
         // For direction flipping
         player1.enemy = player2;

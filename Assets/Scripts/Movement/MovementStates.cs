@@ -38,7 +38,7 @@ public class LeftState : MovementBaseState
 
     public override void UpdateState(MovementStateManager movement)
     {
-        movement.transform.Translate(Vector3.left * movement.moveSpeed * Time.deltaTime);
+        movement.transform.Translate(Vector3.left * movement.config.moveSpeed * Time.deltaTime);
     }
 
     public override void ExitState(MovementStateManager movement)
@@ -56,7 +56,7 @@ public class RightState : MovementBaseState
 
     public override void UpdateState(MovementStateManager movement)
     {
-        movement.transform.Translate(Vector3.right * movement.moveSpeed * Time.deltaTime);
+        movement.transform.Translate(Vector3.right * movement.config.moveSpeed * Time.deltaTime);
     }
 
     public override void ExitState(MovementStateManager movement)
@@ -75,7 +75,7 @@ public class JumpState : MovementBaseState
             return;
         }
 
-        movement.GetRb().AddForce(Vector2.up * movement.jumpForce);
+        movement.GetRb().AddForce(Vector2.up * movement.config.jumpForce);
         movement.isGrounded = false;
     }
 
@@ -111,11 +111,8 @@ public class CrouchState : MovementBaseState
 
 public class DashState : MovementBaseState
 {
-    private float dashDuration = 0.15f;
-    private float dashSpeed = 20f;
     private float elapsedTime = 0f;
     private Vector2 dashDirection;
-
 
     public override void EnterState(MovementStateManager movement)
     {
@@ -130,7 +127,7 @@ public class DashState : MovementBaseState
                     movement.GetRb().velocity.x >= 0 ? 1 : -1;
 
         dashDirection = new Vector2(dir, 0).normalized;
-        movement.GetRb().velocity = dashDirection * dashSpeed;
+        movement.GetRb().velocity = dashDirection * movement.config.dashSpeed;
         movement.GetRb().gravityScale = 0;
     }
 
@@ -138,9 +135,9 @@ public class DashState : MovementBaseState
     {
         elapsedTime += Time.deltaTime;
 
-        movement.GetRb().velocity = dashDirection * dashSpeed;
+        movement.GetRb().velocity = dashDirection * movement.config.dashSpeed;
 
-        if (elapsedTime >= dashDuration)
+        if (elapsedTime >= movement.config.dashDuration)
         {
             movement.SwitchState(movement.idleState);
         }
@@ -149,11 +146,11 @@ public class DashState : MovementBaseState
     public override void ExitState(MovementStateManager movement)
     {
         movement.SetAllowInput(true);
-        movement.GetRb().gravityScale = 10;
+        movement.GetRb().gravityScale = movement.config.gravityScale;
 
         var config = movement.player.inputManager.config;
 
-        float moveSpeed = movement.moveSpeed;
+        float moveSpeed = movement.config.moveSpeed;
 
         if (Input.GetKey(config.moveLeft))
         {
@@ -173,15 +170,14 @@ public class DashState : MovementBaseState
 
 public class HitState : MovementBaseState
 {
-    private float horizontalKnockback = 7f;
-    private float verticalKnockback = 5f;
+    
 
     public override void EnterState(MovementStateManager movement)
     {
         Debug.Log("Hit!");
         Vector2 direction = (movement.transform.position - movement.player.enemy.transform.position).normalized;
 
-        Vector2 knockback = new Vector2(direction.x * horizontalKnockback, verticalKnockback);
+        Vector2 knockback = new Vector2(direction.x * movement.config.horizontalKnockback, movement.config.verticalKnockback);
 
         movement.player.rb.velocity = Vector2.zero;
         movement.player.rb.AddForce(knockback, ForceMode2D.Impulse);

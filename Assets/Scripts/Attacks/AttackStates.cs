@@ -74,7 +74,7 @@ public class SlashState : AttackBaseState
     public override void EnterState(AttackStateManager attack)
     {
         Debug.Log("Entered Slash");
-        attack.StartCoroutine(StartAttack(attack, 1f));
+        attack.StartCoroutine(StartAttack(attack, 0.4f));
     }
 
     public override void UpdateState(AttackStateManager attack)

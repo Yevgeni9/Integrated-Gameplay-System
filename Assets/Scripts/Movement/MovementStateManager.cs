@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class MovementStateManager
     public readonly float jumpForce;
     public bool isGrounded;
     public bool AllowInput { get; private set; } = true;
+    public GameSettingsConfig config;
 
     public IdleState idleState = new IdleState();
     public LeftState leftState = new LeftState();
@@ -21,13 +23,12 @@ public class MovementStateManager
     public DashState dashState = new DashState();
     public HitState hitState = new HitState();
 
-    public MovementStateManager(Transform playerTransform, float moveSpeed, float jumpForce, Player player)
+    public MovementStateManager(Transform playerTransform, GameSettingsConfig config, Player player)
     {
         Start();
         this.transform = playerTransform;
-        this.moveSpeed = moveSpeed;
+        this.config = config;
         this.player = player;
-        this.jumpForce = jumpForce;
 
         player.OnHit += EnterHitState;
     }
@@ -41,6 +42,11 @@ public class MovementStateManager
     public void Update()
     {
         currentState.UpdateState(this);
+
+        if (!AllowInput && isGrounded && !(currentState is DashState))
+        {
+            currentState = idleState;
+        }
     }
 
     public void SwitchState(MovementBaseState state)

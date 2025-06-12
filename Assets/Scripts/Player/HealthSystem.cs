@@ -11,6 +11,7 @@ public class HealthSystem
     public HealthSystem(int maxHealth, HealthBar healthbar)
     {
         this.maxHealth = maxHealth;
+        Debug.Log(maxHealth);
         this.currentHealth = maxHealth;
         this.healthBar = healthbar;
 

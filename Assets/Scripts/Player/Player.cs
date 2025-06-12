@@ -16,12 +16,14 @@ public class Player
     public GameObject kickHitbox;
     public GameObject slashHitbox;
 
+    public GameSettingsConfig gameConfig;
+
     public Player enemy; // The opposing player
     public HealthSystem healthSystem;
 
     public event Action OnHit;
 
-    public Player(InputConfig inputConfig, Rigidbody2D rb, Transform transform, GameObject punch, GameObject kick, GameObject slash, HealthSystem healthSystem, MonoBehaviour coroutineStarter)
+    public Player(InputConfig inputConfig, Rigidbody2D rb, Transform transform, GameObject punch, GameObject kick, GameObject slash, HealthSystem healthSystem, GameSettingsConfig gameConfig, MonoBehaviour coroutineStarter)
     {
         this.rb = rb;
         this.transform = transform;
@@ -29,10 +31,14 @@ public class Player
         this.kickHitbox = kick;
         this.slashHitbox = slash;
         this.healthSystem = healthSystem;
+        this.gameConfig = gameConfig;
 
-        movementStateManager = new MovementStateManager(transform, 5f, 1500f, this);
+        movementStateManager = new MovementStateManager(transform, gameConfig, this);
         attackStateManager = new AttackStateManager(this, coroutineStarter);
         inputManager = new InputManager(inputConfig);
+
+        attackStateManager.OnAttackStart += () => movementStateManager.SetAllowInput(false);
+        attackStateManager.OnAttackEnd += () => movementStateManager.SetAllowInput(true);
     }
 
     public void Update()
