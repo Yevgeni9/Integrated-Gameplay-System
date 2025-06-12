@@ -5,14 +5,13 @@ using UnityEngine;
 public class HealthSystem
 {
     private int maxHealth;
-    public int currentHealth;
+    private int currentHealth;
     private HealthBar healthBar;
 
     public HealthSystem(int maxHealth, HealthBar healthbar)
     {
         this.maxHealth = maxHealth;
-        Debug.Log(maxHealth);
-        this.currentHealth = maxHealth;
+        this.currentHealth = maxHealth; // Sets maxHealth
         this.healthBar = healthbar;
 
         healthBar.UpdateHealthBar(currentHealth, maxHealth);

@@ -41,9 +41,6 @@ public class Main : MonoBehaviour
     
     void Start()
     {
-        // Settings
-        gameConfig = new GameSettingsConfig();
-
         // Health
         player1HealthBar = new HealthBar(player1HealthContainer, p1healthbarBlock, gameConfig.maxHealth);
         player2HealthBar = new HealthBar(player2HealthContainer, p2healthbarBlock, gameConfig.maxHealth);
@@ -58,6 +55,7 @@ public class Main : MonoBehaviour
         player1.enemy = player2;
         player2.enemy = player1;
 
+        // For collision detection
         player1.bodyCollider = player1Collider;
         player2.bodyCollider = player2Collider;
     }

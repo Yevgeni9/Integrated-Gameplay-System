@@ -16,18 +16,11 @@ public class PunchState : AttackBaseState
     public override void EnterState(AttackStateManager attack)
     {
         Debug.Log("Entered Punch");
-        attack.StartCoroutine(StartAttack(attack, 0.2f));
+        attack.StartCoroutine(StartAttack(attack, attack.config.punchDuration));
     }
 
-    public override void UpdateState(AttackStateManager attack)
-    {
-
-    }
-
-    public override void ExitState(AttackStateManager attack)
-    {
-        Debug.Log("Exited Punch");
-    }
+    public override void UpdateState(AttackStateManager attack) { }
+    public override void ExitState(AttackStateManager attack) { }
 
     private IEnumerator StartAttack(AttackStateManager attack, float delay)
     {
@@ -45,18 +38,12 @@ public class KickState : AttackBaseState
     public override void EnterState(AttackStateManager attack)
     {
         Debug.Log("Entered Kick");
-        attack.StartCoroutine(StartAttack(attack, 0.3f));
+        attack.StartCoroutine(StartAttack(attack, attack.config.kickDuration));
     }
 
-    public override void UpdateState(AttackStateManager attack)
-    {
+    public override void UpdateState(AttackStateManager attack) { }
 
-    }
-
-    public override void ExitState(AttackStateManager attack)
-    {
-        Debug.Log("Exited Kick");
-    }
+    public override void ExitState(AttackStateManager attack) { }
 
     private IEnumerator StartAttack(AttackStateManager attack, float delay)
     {
@@ -74,18 +61,11 @@ public class SlashState : AttackBaseState
     public override void EnterState(AttackStateManager attack)
     {
         Debug.Log("Entered Slash");
-        attack.StartCoroutine(StartAttack(attack, 0.4f));
+        attack.StartCoroutine(StartAttack(attack, attack.config.slashDuration));
     }
 
-    public override void UpdateState(AttackStateManager attack)
-    {
-
-    }
-
-    public override void ExitState(AttackStateManager attack)
-    {
-
-    }
+    public override void UpdateState(AttackStateManager attack) { }
+    public override void ExitState(AttackStateManager attack) { }
 
     private IEnumerator StartAttack(AttackStateManager attack, float delay)
     {
@@ -98,20 +78,10 @@ public class SlashState : AttackBaseState
     }
 }
 
+// Basicly an idle state for the AttackStateMachine
 public class NoAttackState : AttackBaseState
 {
-    public override void EnterState(AttackStateManager attack)
-    {
-        Debug.Log("Not attacking");
-    }
-
-    public override void UpdateState(AttackStateManager attack)
-    {
-
-    }
-
-    public override void ExitState(AttackStateManager attack)
-    {
-
-    }
+    public override void EnterState(AttackStateManager attack) { }
+    public override void UpdateState(AttackStateManager attack) { }
+    public override void ExitState(AttackStateManager attack) { }
 }

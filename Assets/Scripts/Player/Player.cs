@@ -7,7 +7,7 @@ public class Player
 {
     public MovementStateManager movementStateManager;
     private AttackStateManager attackStateManager;
-    public InputManager inputManager; // Public because DashState Needs it
+    public InputManager inputManager;
     
     public Transform transform;
     public Rigidbody2D rb;
@@ -34,7 +34,7 @@ public class Player
         this.gameConfig = gameConfig;
 
         movementStateManager = new MovementStateManager(transform, gameConfig, this);
-        attackStateManager = new AttackStateManager(this, coroutineStarter);
+        attackStateManager = new AttackStateManager(this, gameConfig, coroutineStarter);
         inputManager = new InputManager(inputConfig);
 
         attackStateManager.OnAttackStart += () => movementStateManager.SetAllowInput(false);
@@ -50,6 +50,7 @@ public class Player
         FaceTarget(enemy);
     }
 
+    // To face the right direction im flipping the scale to -1, when using assets a sprite flip can be done
     public void FaceTarget(Player otherPlayer)
     {
         if (movementStateManager.isGrounded && attackStateManager.currentState == attackStateManager.noAttackState)

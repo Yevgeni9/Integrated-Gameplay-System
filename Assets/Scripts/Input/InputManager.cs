@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager
 {
-    public InputConfig config; // Dash State needs it
+    public InputConfig config;
     private Dictionary<KeyCode, IMovementCommand> movementCommandMap;
     private Dictionary<KeyCode, IAttackCommand> attackCommandMap;
     private IMovementCommand noInput;
@@ -31,6 +31,7 @@ public class InputManager
         noInput = new IdleCommand();
     }
 
+    // Movement Inputs, some actions have a higher priority and will be executed over others
     public void ManageMovementInputs(MovementStateManager movement)
     {
         if (!movement.AllowInput)
@@ -69,14 +70,14 @@ public class InputManager
         noInput.Execute(movement);
     }
 
+    // Attack inputs, no attack has priority over another so the order does not matter
     public void ManageAttackInputs(AttackStateManager attack)
     {
         if (attack.isAttacking)
         {
             return;
         }
-
-        // Attack inputs, these do not have priority so it can be done in a loop
+        
         foreach (var pair in attackCommandMap)
         {
             if (Input.GetKeyDown(pair.Key))

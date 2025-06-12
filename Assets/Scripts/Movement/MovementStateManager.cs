@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class MovementStateManager
 {
+    private MovementBaseState currentState;
+    public GameSettingsConfig config;
     public Player player;
-    MovementBaseState currentState;
 
     public readonly Transform transform;
+
     public readonly float moveSpeed;
     public readonly float jumpForce;
     public bool isGrounded;
     public bool AllowInput { get; private set; } = true;
-    public GameSettingsConfig config;
 
     public IdleState idleState = new IdleState();
     public LeftState leftState = new LeftState();

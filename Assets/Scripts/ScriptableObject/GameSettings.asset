@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 1500
+  gravityScale: 10
   dashSpeed: 20
-  dashDuraiton: 0.15
+  dashDuration: 0.15
+  maxHealth: 10
+  punchDamage: 1
+  kickDamage: 1
+  slashDamage: 1
+  horizontalKnockback: 7
+  verticalKnockback: 5

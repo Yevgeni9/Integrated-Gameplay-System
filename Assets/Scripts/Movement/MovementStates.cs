@@ -13,20 +13,9 @@ public abstract class MovementBaseState
 
 public class IdleState : MovementBaseState
 {
-    public override void EnterState(MovementStateManager movement)
-    {
-        Debug.Log("is Idle");
-    }
-
-    public override void UpdateState(MovementStateManager movement)
-    {
-
-    }
-
-    public override void ExitState(MovementStateManager movement)
-    {
-
-    }
+    public override void EnterState(MovementStateManager movement) { }
+    public override void UpdateState(MovementStateManager movement) { }
+    public override void ExitState(MovementStateManager movement) { }
 }
 
 public class LeftState : MovementBaseState
@@ -41,10 +30,7 @@ public class LeftState : MovementBaseState
         movement.transform.Translate(Vector3.left * movement.config.moveSpeed * Time.deltaTime);
     }
 
-    public override void ExitState(MovementStateManager movement)
-    {
-
-    }
+    public override void ExitState(MovementStateManager movement) { }
 }
 
 public class RightState : MovementBaseState
@@ -59,10 +45,7 @@ public class RightState : MovementBaseState
         movement.transform.Translate(Vector3.right * movement.config.moveSpeed * Time.deltaTime);
     }
 
-    public override void ExitState(MovementStateManager movement)
-    {
-
-    }
+    public override void ExitState(MovementStateManager movement) { }
 }
 
 public class JumpState : MovementBaseState
@@ -79,15 +62,8 @@ public class JumpState : MovementBaseState
         movement.isGrounded = false;
     }
 
-    public override void UpdateState(MovementStateManager movement)
-    {
-
-    }
-
-    public override void ExitState(MovementStateManager movement)
-    {
-
-    }
+    public override void UpdateState(MovementStateManager movement) { }
+    public override void ExitState(MovementStateManager movement) { }
 }
 
 public class CrouchState : MovementBaseState
@@ -98,10 +74,7 @@ public class CrouchState : MovementBaseState
         movement.transform.localScale = new Vector2(1, 1); // Ideally I would change a sprite here or start an animation, but for the prototype im just reducing the cube size
     }
 
-    public override void UpdateState(MovementStateManager movement)
-    {
-
-    }
+    public override void UpdateState(MovementStateManager movement) { }
 
     public override void ExitState(MovementStateManager movement)
     {
@@ -145,51 +118,42 @@ public class DashState : MovementBaseState
 
     public override void ExitState(MovementStateManager movement)
     {
+        var config = movement.player.inputManager.config;
+        float moveSpeed = movement.config.moveSpeed;
+
         movement.SetAllowInput(true);
         movement.GetRb().gravityScale = movement.config.gravityScale;
 
-        var config = movement.player.inputManager.config;
-
-        float moveSpeed = movement.config.moveSpeed;
-
         if (Input.GetKey(config.moveLeft))
         {
-            movement.GetRb().velocity = new Vector2(-moveSpeed, movement.GetRb().velocity.y);
+            movement.GetRb().velocity = new Vector2(-movement.config.moveSpeed, movement.GetRb().velocity.y);
         }
         else if (Input.GetKey(config.moveRight))
         {
-            movement.GetRb().velocity = new Vector2(moveSpeed, movement.GetRb().velocity.y);
+            movement.GetRb().velocity = new Vector2(movement.config.moveSpeed, movement.GetRb().velocity.y);
         }
         else
         {
-            float retainedSpeed = dashDirection.x * (moveSpeed * 0.5f);
+            float retainedSpeed = dashDirection.x * (movement.config.moveSpeed * 0.5f); // Not holding an input will reduce the velocity
             movement.GetRb().velocity = new Vector2(retainedSpeed, movement.GetRb().velocity.y);
         }
     }
 }
 
+// Hit state will knock the player back from the attacker
 public class HitState : MovementBaseState
 {
-    
-
     public override void EnterState(MovementStateManager movement)
     {
         Debug.Log("Hit!");
-        Vector2 direction = (movement.transform.position - movement.player.enemy.transform.position).normalized;
 
+        Vector2 direction = (movement.transform.position - movement.player.enemy.transform.position).normalized;
         Vector2 knockback = new Vector2(direction.x * movement.config.horizontalKnockback, movement.config.verticalKnockback);
 
         movement.player.rb.velocity = Vector2.zero;
         movement.player.rb.AddForce(knockback, ForceMode2D.Impulse);
     }
 
-    public override void UpdateState(MovementStateManager movement)
-    {
-
-    }
-
-    public override void ExitState(MovementStateManager movement)
-    {
-        Debug.Log("Exit Hit");
-    }
+    public override void UpdateState(MovementStateManager movement) { }
+    public override void ExitState(MovementStateManager movement) { }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// HealthBar is composed of gameObjects that get disabled on hit
 public class HealthBar
 {
     private List<GameObject> blocks;
