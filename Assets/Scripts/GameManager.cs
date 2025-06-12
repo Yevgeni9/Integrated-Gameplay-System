@@ -18,6 +18,7 @@ public class GameManager
         this.resetText = resetText;
         this.startScreenPanel = startScreenPanel;
         this.startScreenText = startScreenText;
+
         GameStarted = false;
         GameEnded = false;
     }

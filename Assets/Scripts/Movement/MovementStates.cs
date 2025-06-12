@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class MovementBaseState
@@ -11,12 +9,14 @@ public abstract class MovementBaseState
     public abstract void ExitState(MovementStateManager movement);
 }
 
+
 public class IdleState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement) { }
     public override void UpdateState(MovementStateManager movement) { }
     public override void ExitState(MovementStateManager movement) { }
 }
+
 
 public class LeftState : MovementBaseState
 {
@@ -33,6 +33,7 @@ public class LeftState : MovementBaseState
     public override void ExitState(MovementStateManager movement) { }
 }
 
+
 public class RightState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
@@ -47,6 +48,7 @@ public class RightState : MovementBaseState
 
     public override void ExitState(MovementStateManager movement) { }
 }
+
 
 public class JumpState : MovementBaseState
 {
@@ -66,6 +68,7 @@ public class JumpState : MovementBaseState
     public override void ExitState(MovementStateManager movement) { }
 }
 
+
 public class CrouchState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
@@ -81,6 +84,7 @@ public class CrouchState : MovementBaseState
         movement.transform.localScale = new Vector2(movement.transform.localScale.x, movement.config.defaultHeightScale); // Reset to normal size
     }
 }
+
 
 public class DashState : MovementBaseState
 {
@@ -139,6 +143,7 @@ public class DashState : MovementBaseState
         }
     }
 }
+
 
 // Hit state will knock the player back from the attacker
 public class HitState : MovementBaseState

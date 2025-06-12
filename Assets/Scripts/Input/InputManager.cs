@@ -35,7 +35,9 @@ public class InputManager
     public void ManageMovementInputs(MovementStateManager movement)
     {
         if (!movement.AllowInput)
+        {
             return;
+        }
 
         if (Input.GetKeyDown(config.dash))
         {
@@ -70,7 +72,7 @@ public class InputManager
         noInput.Execute(movement);
     }
 
-    // Attack inputs, no attack has priority over another so the order does not matter
+    // Attack inputs, no attack has priority over another so the order of starting does not matter
     public void ManageAttackInputs(AttackStateManager attack)
     {
         if (attack.isAttacking)

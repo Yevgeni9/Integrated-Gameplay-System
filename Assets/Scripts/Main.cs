@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
@@ -32,7 +31,7 @@ public class Main : MonoBehaviour
     [SerializeField] private Transform player1HealthContainer;
     [SerializeField] private Transform player2HealthContainer;
 
-    [Header("Settings")]
+    [Header("Game Settings")]
     [SerializeField] private GameSettingsConfig gameConfig;
     [SerializeField] private LayerMask groundLayer;
     

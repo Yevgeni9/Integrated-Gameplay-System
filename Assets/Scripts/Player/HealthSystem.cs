@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // Simple class for managing health
@@ -15,7 +13,7 @@ public class HealthSystem
     public HealthSystem(int maxHealth, HealthBar healthbar)
     {
         this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth; // Sets maxHealth
+        this.currentHealth = maxHealth;
         this.healthBar = healthbar;
 
         healthBar.UpdateHealthBar(currentHealth, maxHealth);

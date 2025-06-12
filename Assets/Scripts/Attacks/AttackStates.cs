@@ -11,6 +11,7 @@ public abstract class AttackBaseState
     public abstract void ExitState(AttackStateManager attack);
 }
 
+
 public class PunchState : AttackBaseState
 {
     public override void EnterState(AttackStateManager attack)
@@ -32,6 +33,7 @@ public class PunchState : AttackBaseState
         attack.SwitchState(attack.noAttackState);
     }
 }
+
 
 public class KickState : AttackBaseState
 {
@@ -56,6 +58,7 @@ public class KickState : AttackBaseState
     }
 }
 
+
 public class SlashState : AttackBaseState
 {
     public override void EnterState(AttackStateManager attack)
@@ -77,6 +80,7 @@ public class SlashState : AttackBaseState
         attack.SwitchState(attack.noAttackState);
     }
 }
+
 
 // Basicly an idle state for the AttackStateMachine
 public class NoAttackState : AttackBaseState
