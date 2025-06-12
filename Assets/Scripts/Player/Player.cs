@@ -6,21 +6,34 @@ public class Player
     public MovementStateManager movementStateManager;
     private AttackStateManager attackStateManager;
     public InputManager inputManager; // Public because DashState Needs it
+    public Collider2D bodyCollider;
 
     public Transform transform;
     public GameObject punchHitbox;
     public GameObject kickHitbox;
     public GameObject slashHitbox;
 
-    public Player enemy;
+    public Player enemy; // The opposing player
 
-    public Player(InputConfig inputConfig, Rigidbody2D rb, Transform transform, GameObject punch, GameObject kick, GameObject slash, MonoBehaviour coroutineStarter)
+    public HealthSystem healthSystem;
+
+    public float hitCooldown = 0.2f;
+    public float hitTimer = 0f;
+
+    public float kickCooldown = 0.2f;
+    public float kickTimer = 0f;
+
+    public float slashCooldown = 0.2f;
+    public float slashTimer = 0f;
+
+    public Player(InputConfig inputConfig, Rigidbody2D rb, Transform transform, GameObject punch, GameObject kick, GameObject slash, HealthSystem healthSystem, MonoBehaviour coroutineStarter)
     {
         this.rb = rb;
         this.transform = transform;
         this.punchHitbox = punch;
         this.kickHitbox = kick;
         this.slashHitbox = slash;
+        this.healthSystem = healthSystem;
 
         movementStateManager = new MovementStateManager(transform, 5f, 1500f, this);
         attackStateManager = new AttackStateManager(this, coroutineStarter);
@@ -34,6 +47,9 @@ public class Player
         inputManager.ManageMovementInputs(movementStateManager);
         inputManager.ManageAttackInputs(attackStateManager);
         FaceTarget(enemy);
+        hitTimer += Time.deltaTime;
+        kickTimer += Time.deltaTime;
+        slashTimer += Time.deltaTime;
     }
 
     public void FaceTarget(Player otherPlayer)
@@ -51,5 +67,10 @@ public class Player
     public void SetGrounded(bool grounded)
     {
         movementStateManager.SetGrounded(grounded);
+    }
+
+    public void TakeDamage(int amount)
+    {
+        healthSystem.TakeDamage(amount);
     }
 }

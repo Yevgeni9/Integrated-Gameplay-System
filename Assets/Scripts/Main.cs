@@ -37,24 +37,29 @@ public class Main : MonoBehaviour
     public int maxHealth = 10;
     public LayerMask groundLayer;
 
+
     private Player player1;
     private Player player2;
+    
 
     void Start()
     {
+        // Health
+        player1HealthBar = new HealthBar(player1HealthContainer, healthbarBlock, maxHealth);
+        player2HealthBar = new HealthBar(player2HealthContainer, healthbarBlock, maxHealth);
+        player1Health = new HealthSystem(maxHealth, player1HealthBar);
+        player2Health = new HealthSystem(maxHealth, player2HealthBar);
+
         // Create players
-        player1 = new Player(player1InputConfig, player1Rb, player1Transform, player1PunchHitbox, player1KickHitbox, player1SlashHitbox, this);
-        player2 = new Player(player2InputConfig, player2Rb, player2Transform, player2PunchHitbox, player2KickHitbox, player2SlashHitbox, this);
+        player1 = new Player(player1InputConfig, player1Rb, player1Transform, player1PunchHitbox, player1KickHitbox, player1SlashHitbox, player1Health, this);
+        player2 = new Player(player2InputConfig, player2Rb, player2Transform, player2PunchHitbox, player2KickHitbox, player2SlashHitbox, player2Health, this);
 
         // For direction flipping
         player1.enemy = player2;
         player2.enemy = player1;
 
-        // Health
-        player1Health = new HealthSystem(maxHealth);
-        player2Health = new HealthSystem(maxHealth);
-        player1HealthBar = new HealthBar(player1HealthContainer, healthbarBlock, maxHealth);
-        player2HealthBar = new HealthBar(player2HealthContainer, healthbarBlock, maxHealth);
+        player1.bodyCollider = player1Collider;
+        player2.bodyCollider = player2Collider;
     }
 
     void Update()
@@ -64,6 +69,36 @@ public class Main : MonoBehaviour
 
         UpdateGrounded(player1, player1Collider);
         UpdateGrounded(player2, player2Collider);
+    }
+
+    private void FixedUpdate()
+    {
+        CheckHit(player1, player2);
+        CheckHit(player2, player1);
+    }
+
+    private void CheckHit(Player attacker, Player defender)
+    {
+        if (attacker.punchHitbox.activeSelf && attacker.punchHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider) && attacker.hitTimer >= attacker.hitCooldown)
+        {
+            defender.TakeDamage(1);
+            attacker.hitTimer = 0f;
+            attacker.punchHitbox.SetActive(false);
+        }
+
+        if (attacker.kickHitbox.activeSelf && attacker.kickHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider) && attacker.kickTimer >= attacker.hitCooldown)
+        {
+            defender.TakeDamage(1);
+            attacker.hitTimer = 0f;
+            attacker.kickHitbox.SetActive(false);
+        }
+
+        if (attacker.slashHitbox.activeSelf && attacker.slashHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider) && attacker.slashTimer >= attacker.hitCooldown)
+        {
+            defender.TakeDamage(1);
+            attacker.hitTimer = 0f;
+            attacker.slashHitbox.SetActive(false);
+        }
     }
 
     private void UpdateGrounded(Player player, Collider2D collider)

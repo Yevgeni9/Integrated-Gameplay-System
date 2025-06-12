@@ -17,7 +17,7 @@ public class HealthBar
         }
     }
 
-    public void UpdateHealthBar(int currentHealth)
+    public void UpdateHealthBar(int currentHealth, int maxHealth)
     {
         for (int i = 0; i < blocks.Count; i++)
         {

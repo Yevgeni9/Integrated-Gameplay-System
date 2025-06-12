@@ -38,7 +38,6 @@ public class MovementStateManager
     public void Update()
     {
         currentState.UpdateState(this);
-        Debug.Log(isGrounded);
     }
 
     public void SwitchState(MovementBaseState state)

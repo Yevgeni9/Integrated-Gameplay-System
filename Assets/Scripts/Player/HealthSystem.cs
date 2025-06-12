@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class HealthSystem
 {
-    public int MaxHealth { get; private set; }
-    public int CurrentHealth { get; private set; }
+    private int maxHealth;
+    public int currentHealth;
+    private HealthBar healthBar;
 
-    public HealthSystem(int maxHealth)
+    public HealthSystem(int maxHealth, HealthBar healthbar)
     {
-        MaxHealth = maxHealth;
-        CurrentHealth = maxHealth;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
+        this.healthBar = healthbar;
+
+        healthBar.UpdateHealthBar(currentHealth, maxHealth);
     }
 
     public void TakeDamage (int amount)
     {
-        CurrentHealth -= amount;
+        currentHealth -= amount;
+        healthBar.UpdateHealthBar(currentHealth, maxHealth);
     }
 }
