@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Hitbox_P1
+  - Hitbox_P2
   layers:
   - Default
   - TransparentFX

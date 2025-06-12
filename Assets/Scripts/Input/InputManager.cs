@@ -8,6 +8,7 @@ public class InputManager
     private Dictionary<KeyCode, IMovementCommand> movementCommandMap;
     private Dictionary<KeyCode, IAttackCommand> attackCommandMap;
     private IMovementCommand noInput;
+    private IMovementCommand hit;
 
     public InputManager(InputConfig config)
     {
@@ -26,6 +27,7 @@ public class InputManager
         attackCommandMap[config.kick] = new KickCommand();
         attackCommandMap[config.slash] = new SlashCommand();
 
+        hit = new HitCommand();
         noInput = new IdleCommand();
     }
 

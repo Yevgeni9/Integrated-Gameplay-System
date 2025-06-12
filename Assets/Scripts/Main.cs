@@ -30,13 +30,10 @@ public class Main : MonoBehaviour
     public GameObject healthbarBlock;
     public Transform player1HealthContainer;
     public Transform player2HealthContainer;
-    
-    
 
     [Header("Settings")]
     public int maxHealth = 10;
     public LayerMask groundLayer;
-
 
     private Player player1;
     private Player player2;
@@ -79,24 +76,21 @@ public class Main : MonoBehaviour
 
     private void CheckHit(Player attacker, Player defender)
     {
-        if (attacker.punchHitbox.activeSelf && attacker.punchHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider) && attacker.hitTimer >= attacker.hitCooldown)
+        if (attacker.punchHitbox.activeSelf && attacker.punchHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider))
         {
             defender.TakeDamage(1);
-            attacker.hitTimer = 0f;
             attacker.punchHitbox.SetActive(false);
         }
 
-        if (attacker.kickHitbox.activeSelf && attacker.kickHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider) && attacker.kickTimer >= attacker.hitCooldown)
+        if (attacker.kickHitbox.activeSelf && attacker.kickHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider))
         {
             defender.TakeDamage(1);
-            attacker.hitTimer = 0f;
             attacker.kickHitbox.SetActive(false);
         }
 
-        if (attacker.slashHitbox.activeSelf && attacker.slashHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider) && attacker.slashTimer >= attacker.hitCooldown)
+        if (attacker.slashHitbox.activeSelf && attacker.slashHitbox.GetComponent<Collider2D>().IsTouching(defender.bodyCollider))
         {
             defender.TakeDamage(1);
-            attacker.hitTimer = 0f;
             attacker.slashHitbox.SetActive(false);
         }
     }

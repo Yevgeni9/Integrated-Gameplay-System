@@ -19,6 +19,7 @@ public class MovementStateManager
     public CrouchState crouchState = new CrouchState();
     public JumpState jumpState = new JumpState();
     public DashState dashState = new DashState();
+    public HitState hitState = new HitState();
 
     public MovementStateManager(Transform playerTransform, float moveSpeed, float jumpForce, Player player)
     {
@@ -27,6 +28,8 @@ public class MovementStateManager
         this.moveSpeed = moveSpeed;
         this.player = player;
         this.jumpForce = jumpForce;
+
+        player.OnHit += EnterHitState;
     }
 
     public void Start()
@@ -55,6 +58,11 @@ public class MovementStateManager
     public void SetAllowInput(bool allowed)
     {
         AllowInput = allowed;
+    }
+
+    private void EnterHitState()
+    {
+        SwitchState(hitState);
     }
 
     public Rigidbody2D GetRb() => player.rb;

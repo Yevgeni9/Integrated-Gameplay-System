@@ -1,30 +1,25 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class Player
 {
-    public Rigidbody2D rb;
     public MovementStateManager movementStateManager;
     private AttackStateManager attackStateManager;
     public InputManager inputManager; // Public because DashState Needs it
-    public Collider2D bodyCollider;
-
+    
     public Transform transform;
+    public Rigidbody2D rb;
+    public Collider2D bodyCollider;
     public GameObject punchHitbox;
     public GameObject kickHitbox;
     public GameObject slashHitbox;
 
     public Player enemy; // The opposing player
-
     public HealthSystem healthSystem;
 
-    public float hitCooldown = 0.2f;
-    public float hitTimer = 0f;
-
-    public float kickCooldown = 0.2f;
-    public float kickTimer = 0f;
-
-    public float slashCooldown = 0.2f;
-    public float slashTimer = 0f;
+    public event Action OnHit;
 
     public Player(InputConfig inputConfig, Rigidbody2D rb, Transform transform, GameObject punch, GameObject kick, GameObject slash, HealthSystem healthSystem, MonoBehaviour coroutineStarter)
     {
@@ -47,9 +42,6 @@ public class Player
         inputManager.ManageMovementInputs(movementStateManager);
         inputManager.ManageAttackInputs(attackStateManager);
         FaceTarget(enemy);
-        hitTimer += Time.deltaTime;
-        kickTimer += Time.deltaTime;
-        slashTimer += Time.deltaTime;
     }
 
     public void FaceTarget(Player otherPlayer)
@@ -72,5 +64,6 @@ public class Player
     public void TakeDamage(int amount)
     {
         healthSystem.TakeDamage(amount);
+        OnHit?.Invoke();
     }
 }

@@ -151,13 +151,15 @@ public class DashState : MovementBaseState
         movement.SetAllowInput(true);
         movement.GetRb().gravityScale = 10;
 
+        var config = movement.player.inputManager.config;
+
         float moveSpeed = movement.moveSpeed;
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(config.moveLeft))
         {
             movement.GetRb().velocity = new Vector2(-moveSpeed, movement.GetRb().velocity.y);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(config.moveRight))
         {
             movement.GetRb().velocity = new Vector2(moveSpeed, movement.GetRb().velocity.y);
         }
@@ -166,5 +168,32 @@ public class DashState : MovementBaseState
             float retainedSpeed = dashDirection.x * (moveSpeed * 0.5f);
             movement.GetRb().velocity = new Vector2(retainedSpeed, movement.GetRb().velocity.y);
         }
+    }
+}
+
+public class HitState : MovementBaseState
+{
+    private float horizontalKnockback = 7f;
+    private float verticalKnockback = 5f;
+
+    public override void EnterState(MovementStateManager movement)
+    {
+        Debug.Log("Hit!");
+        Vector2 direction = (movement.transform.position - movement.player.enemy.transform.position).normalized;
+
+        Vector2 knockback = new Vector2(direction.x * horizontalKnockback, verticalKnockback);
+
+        movement.player.rb.velocity = Vector2.zero;
+        movement.player.rb.AddForce(knockback, ForceMode2D.Impulse);
+    }
+
+    public override void UpdateState(MovementStateManager movement)
+    {
+
+    }
+
+    public override void ExitState(MovementStateManager movement)
+    {
+        Debug.Log("Exit Hit");
     }
 }

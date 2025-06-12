@@ -52,3 +52,11 @@ public class IdleCommand : IMovementCommand
         movement.SwitchState(movement.idleState);
     }
 }
+
+public class HitCommand : IMovementCommand
+{
+    public void Execute(MovementStateManager movement)
+    {
+        movement.SwitchState(movement.hitState);
+    }
+}

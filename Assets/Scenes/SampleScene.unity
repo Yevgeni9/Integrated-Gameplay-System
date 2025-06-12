@@ -1760,7 +1760,7 @@ GameObject:
   - component: {fileID: 701739011}
   m_Layer: 0
   m_Name: Slash
-  m_TagString: Untagged
+  m_TagString: Hitbox_P1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2126,7 +2126,7 @@ GameObject:
   - component: {fileID: 827239455}
   m_Layer: 0
   m_Name: Kick
-  m_TagString: Untagged
+  m_TagString: Hitbox_P2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2430,7 +2430,7 @@ GameObject:
   - component: {fileID: 951805816}
   m_Layer: 0
   m_Name: Kick
-  m_TagString: Untagged
+  m_TagString: Hitbox_P1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2710,7 +2710,7 @@ GameObject:
   - component: {fileID: 1620409650}
   m_Layer: 0
   m_Name: Slash
-  m_TagString: Untagged
+  m_TagString: Hitbox_P2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2841,7 +2841,7 @@ GameObject:
   - component: {fileID: 1783721584}
   m_Layer: 0
   m_Name: Punch
-  m_TagString: Untagged
+  m_TagString: Hitbox_P1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3102,7 +3102,7 @@ GameObject:
   - component: {fileID: 1927512154}
   m_Layer: 0
   m_Name: Punch
-  m_TagString: Untagged
+  m_TagString: Hitbox_P2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
