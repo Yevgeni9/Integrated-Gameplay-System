@@ -8,7 +8,10 @@ public class Player
     public MovementStateManager movementStateManager;
     private AttackStateManager attackStateManager;
     public InputManager inputManager;
-    
+    public GameSettingsConfig gameConfig;
+    public Player enemy; // The opposing player
+    public HealthSystem healthSystem;
+
     public Transform transform;
     public Rigidbody2D rb;
     public Collider2D bodyCollider;
@@ -16,14 +19,10 @@ public class Player
     public GameObject kickHitbox;
     public GameObject slashHitbox;
 
-    public GameSettingsConfig gameConfig;
-
-    public Player enemy; // The opposing player
-    public HealthSystem healthSystem;
-
     public event Action OnHit;
+    public string playerName;
 
-    public Player(InputConfig inputConfig, Rigidbody2D rb, Transform transform, GameObject punch, GameObject kick, GameObject slash, HealthSystem healthSystem, GameSettingsConfig gameConfig, MonoBehaviour coroutineStarter)
+    public Player(InputConfig inputConfig, Rigidbody2D rb, Transform transform, GameObject punch, GameObject kick, GameObject slash, HealthSystem healthSystem, GameSettingsConfig gameConfig, string playerName, MonoBehaviour coroutineStarter)
     {
         this.rb = rb;
         this.transform = transform;
@@ -32,6 +31,7 @@ public class Player
         this.slashHitbox = slash;
         this.healthSystem = healthSystem;
         this.gameConfig = gameConfig;
+        this.playerName = playerName;
 
         movementStateManager = new MovementStateManager(transform, gameConfig, this);
         attackStateManager = new AttackStateManager(this, gameConfig, coroutineStarter);
@@ -50,7 +50,7 @@ public class Player
         FaceTarget(enemy);
     }
 
-    // To face the right direction im flipping the scale to -1, when using assets a sprite flip can be done
+    // To face the right direction I am flipping the scale to -1, when using assets a sprite flip can be done
     public void FaceTarget(Player otherPlayer)
     {
         if (movementStateManager.isGrounded && attackStateManager.currentState == attackStateManager.noAttackState)
@@ -63,9 +63,10 @@ public class Player
         }
     }
 
-    public void SetGrounded(bool grounded)
+    public void CheckIfGrounded(LayerMask groundLayer)
     {
-        movementStateManager.SetGrounded(grounded);
+        bool isGrounded = bodyCollider.IsTouchingLayers(groundLayer);
+        movementStateManager.SetGrounded(isGrounded);
     }
 
     public void TakeDamage(int amount)

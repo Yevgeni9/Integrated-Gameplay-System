@@ -8,7 +8,7 @@ public class InputManager
     private Dictionary<KeyCode, IMovementCommand> movementCommandMap;
     private Dictionary<KeyCode, IAttackCommand> attackCommandMap;
     private IMovementCommand noInput;
-    private IMovementCommand hit;
+    private readonly IMovementCommand hit;
 
     public InputManager(InputConfig config)
     {
@@ -31,7 +31,7 @@ public class InputManager
         noInput = new IdleCommand();
     }
 
-    // Movement Inputs, some actions have a higher priority and will be executed over others
+    // Movement Inputs, some actions have a higher priority and will be started over others
     public void ManageMovementInputs(MovementStateManager movement)
     {
         if (!movement.AllowInput)
